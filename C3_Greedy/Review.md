@@ -1,4 +1,4 @@
-## 动态规划题型复习
+## 贪心题型复习
 
 ### 0. 基础贪心练手(练手题)
 <img src="img/money.png" alt="" width="" title="Interval Scheduling">
