@@ -225,42 +225,54 @@ dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
 一直退，直到 i==0 或 j==0。
 
 ```cpp
-//最后是OJ上标准的代码,适用于只输出长度的情况，且输入的是字符串
-#include <iostream>
-#include <cstring>
-#include <algorithm>
+//这个是最好的标答
+#include<iostream>
+#include<algorithm>
+#include<cstring>
+#include<vector> 
 using namespace std;
-
-const int N = 1000 + 5;
+const int N = 1010;
 char X[N], Y[N];
-//dp[i][j]表示X前i个字符（X[0..i-1]）与Y前j个字符（Y[0..j-1]）的LCS长度(最长子序列)
 int dp[N][N];
+vector<char> seq;
 
-int main(){
-    cin >> X >> Y;  //这里不能用getline()会引入尾部或者空行的符号 
+int main() {
+    cin >> X >> Y;
     int m = strlen(X);
     int n = strlen(Y);
 
-    //初始化边界：dp[0][*]=dp[*][0]=0（静态分配已默为 0，可省略的）
-    for(int i = 0; i <= m; i++) dp[i][0] = 0;
-    for(int j = 0; j <= n; j++) dp[0][j] = 0;
-
-    //DP
-    for(int i = 1; i <= m; i++){
-        for(int j = 1; j <= n; j++){
-            if (X[i-1] == Y[j-1]) {
-                //匹配上，可以在 dp[i-1][j-1] 基础上加 1
+    //构建dp表（从1开始，访问X[i-1], Y[j-1]）
+    for (int i = 1; i <= m; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (X[i-1] == Y[j-1])
                 dp[i][j] = dp[i-1][j-1] + 1;
-            } else {
-                //不匹配
+            else
                 dp[i][j] = max(dp[i-1][j], dp[i][j-1]);
-            }
         }
     }
 
-    cout << dp[m][n] << "\n";
+    //回溯找 LCS
+    int i = m, j = n;
+    while (i > 0 && j > 0) {
+        if (X[i-1] == Y[j-1]) {
+            seq.push_back(X[i-1]);
+            i--; j--;
+        } else if (dp[i-1][j] >= dp[i][j-1]) {
+            i--;
+        } else {
+            j--;
+        }
+    }
+
+    cout << dp[m][n] << endl;
+
+    //反向输出序列
+    for (int k = seq.size() - 1; k >= 0; k--) cout << seq[k];
+    cout << endl;
+
     return 0;
 }
+
 ```
 
 
