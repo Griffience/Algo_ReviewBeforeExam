@@ -7,6 +7,9 @@ const long long INF = 1e18;
 long long m[MAXN][MAXN]; // m[i][j]：从Ai乘到Aj的最小乘法次数
 int s[MAXN][MAXN];       // s[i][j]：从Ai乘到Aj的最优断点位置
 
+int n = 6;
+int p[] = {30, 35, 15, 5, 10, 20, 25}; // 矩阵维度：A1=30x35, A2=35x15,...A6=20x25
+
 //可视化输出最优加括号方式
 void printParenthesis(int i, int j) {
     if (i == j) {
@@ -20,29 +23,33 @@ void printParenthesis(int i, int j) {
     cout << ")";
 }
 
+int LookupChain(int i, int j){
+	if (m[i][j] > 0) return m[i][j];
+	if (i==j) return 0;
+	int u = LookupChain(i,i) + LookupChain(i+1, j) + p[i-1]*p[i]*p[j];
+	s[i][j]=i;
+	for (int k=i+1;k<j;k++){
+		int t=LookupChain(i,k) + LookupChain(k+1, j) + p[i-1]*p[k]*p[j];
+		if (t<u) {
+			u = t;
+			s[i][j] = k;
+		}
+	}
+	m[i][j] = u;
+	return u;
+}
+
+int matrixChainMem(int n){
+	for (int i=0;i<=n;i++){
+		for (int j=0;j<=n;j++){
+			m[i][j]=0;
+		}
+	}
+	return LookupChain(1,n);
+}
+
 int main() {
-    int n = 6;
-    int p[] = {30, 35, 15, 5, 10, 20, 25}; // 矩阵维度：A1=30x35, A2=35x15,...A6=20x25
-
-    //初始化：m[i][i] = 0（单个矩阵乘法代价为0）
-    for (int i = 1; i <= n; ++i) {
-        m[i][i] = 0;
-    }
-
-    //计算链长从2开始的所有子问题
-    for (int len = 2; len <= n; ++len) {
-        for (int i = 1; i <= n - len + 1; ++i) {
-            int j = i + len - 1;
-            m[i][j] = INF;
-            for (int k = i; k < j; ++k) {
-                long long cost = m[i][k] + m[k+1][j] + 1LL * p[i-1] * p[k] * p[j];
-                if (cost < m[i][j]) {
-                    m[i][j] = cost;
-                    s[i][j] = k;  //记录断点
-                }
-            }
-        }
-    }
+    matrixChainMem(6);
 
     cout << "最少乘法次数: " << m[1][n] << endl;
     cout << "最优加括号方式: ";
