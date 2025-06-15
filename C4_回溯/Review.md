@@ -108,8 +108,8 @@ int main(){
 using namespace std;
 
 const int MAXN = 100;  
-bool adj[MAXN+1][MAXN+1];
-int color[MAXN+1];
+bool adj[MAXN+1][MAXN+1];  //邻接矩阵：adj[u][v]=true表示u和v相邻
+int color[MAXN+1];  //color[i]表示第i个顶点的颜色（1~K）
 long long ans;
 int N, K;
 
