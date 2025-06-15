@@ -41,13 +41,14 @@ int main() {
 <img src="img/power1.png" alt="" width="95%" title="">   
 
 ```cpp
-#include <iostream>
+#include<iostream>
+#include<cmath>
 using namespace std;
 
 int main() {
     int n;
     while (cin >> n) {
-        int total = 1 << n; //2^n 个子集
+        int total = 1 << n; //2^n 个子集  直接pow(2,n)也行
         for (int mask = 0; mask < total; ++mask) {
             cout << "{";
             bool first = true;
