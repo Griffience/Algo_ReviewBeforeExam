@@ -1,7 +1,7 @@
 ## 回溯题型复习
 
 
-### 1.幂级问题PowerSet(60%考这个)
+### 1.幂级问题PowerSet(70%考这个)
 <img src="img/power.png" alt="" width="95%" title="">  
 
 ```cpp
@@ -37,6 +37,35 @@ int main() {
 }
 
 ```
+#### *我服了，在OJ上做这道题的时候，回溯方法太难过了，真的服了，如果逆序输出的话100%过不了，真的服了，所以现在重新把OJ上的题目写一下题解，必须用位运算来做，真的服了靠...* 
+<img src="img/power1.png" alt="" width="95%" title="">   
+
+```cpp
+#include <iostream>
+using namespace std;
+
+int main() {
+    int n;
+    while (cin >> n) {
+        int total = 1 << n; //2^n 个子集
+        for (int mask = 0; mask < total; ++mask) {
+            cout << "{";
+            bool first = true;
+            for (int i = n - 1; i >= 0; --i) { //逆序输出元素
+                if (mask & (1 << i)) {
+                    if (!first) cout << ",";
+                    cout << (i + 1);
+                    first = false;
+                }
+            }
+            cout << "}" << endl;
+        }
+    }
+    return 0;
+}
+
+```
+
 
 ### 2. 排列问题Permutation(这个是最经典的回溯，因为太简单不知道考不考,50%考这个)
 <img src="img/permutation.png" alt="" width="55%" title="">
