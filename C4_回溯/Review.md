@@ -335,5 +335,62 @@ int main(){
 }
 ```
 
+##### *以下附上Acwing 原题代码,超级优美的写法,仅供参考*
+```cpp
+//BFS走迷宫
+#include<iostream>
+#include<queue>
+#include<cstring>//memset 头文件
+using namespace std;
+
+const int N = 110;
+int m, n;
+int g[N][N];//储存点
+int d[N][N] = {0};//储存距离
+typedef pair<int, int>PII;
+
+void bfs(int a,int b)
+{
+	queue<PII> q;//储存每一步走到的点    队列q，建议画图理解
+	q.push({ a,b });
+
+	while(!q.empty())  //画图理解，当q队列里没有点(后面有pop删除点)
+	{
+		PII start = q.front();  //让start点 等于 队列首个点
+
+		q.pop(); //删除q队列首个点
+
+		int dx[4] = { 0,1,0,-1 }, dy[4] = { -1,0,1,0 };//向量
+		for(int i=0;i<4;i++)
+		{
+			int x = start.first + dx[i], y = start.second + dy[i]; //上下左右走四种情况
+
+			if(g[x][y]==0)
+			{
+				//走到这个点，计算距离
+
+				g[x][y] = 1;//标记表示走过了
+				d[x][y] = d[start.first][start.second] + 1;
+
+				q.push({ x,y });
+			}
+		}
+	}
+	cout << d[n][m];
+}
+
+int main() {
+	memset(g, 1, sizeof(g));
+	cin >> n >> m;
+	for(int i=1;i<=n;i++)
+		for(int j=1;j<=m;j++)
+		{
+			cin >> g[i][j];
+		}
+	bfs(1, 1);
+	return 0;
+}
+```
+
 
 
