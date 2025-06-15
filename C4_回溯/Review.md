@@ -271,6 +271,7 @@ int main()
 
 ```cpp
 //BFS走迷宫
+//该题解参考了acwing y总的写法,在上学期数据结构期末考试考的原题,按照自己的方法来就行了
 #include <bits/stdc++.h>
 using namespace std;
  
