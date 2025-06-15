@@ -81,6 +81,21 @@ int main(){
 <img src="img/Mcolor.png" alt="" width="" title="">
 <img src="img/Mcolor2.png" alt="" width="" title="">
 
+```text
+具体思路:
+图输入 → 建图（邻接矩阵）
+          ↓
+ DFS 回溯搜索从顶点1开始：
+      每个顶点尝试所有颜色
+      ↙          ↘
+   如果合法   如果冲突，跳过
+      ↓
+  递归下一个顶点
+      ↓
+所有顶点染色完毕就计数+1
+
+```
+
 ```cpp
 //采用DFS(回溯枚举) 
 //大致思路
